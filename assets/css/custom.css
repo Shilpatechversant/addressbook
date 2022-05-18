@@ -1,0 +1,19 @@
+.nav-bar {
+    background-color: #3c98f3;
+}
+
+.navbar a {
+    color: rgb(239 222 222 / 90%);
+}
+.t-field {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    padding-left: 10px;
+    width:100%;
+    height:70px;
+}
+.bblue
+{
+    background-color: #3c98f3;
+}
