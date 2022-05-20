@@ -37,15 +37,14 @@
         <cfif emailcheck.recordcount >
             <cfset local.variable = "already existing this email">
             <cflocation url="../register.cfm?message=#local.variable#">
-        <cfelse>
-            <cfset local.status_info="active">
+        <cfelse>           
             <cfquery datasource="newtech" result="result">
                 INSERT INTO coldfusion.login (fullname, email, username, password,status) VALUES (
                     <cfqueryparam value="#arguments.fullName#" cfsqltype="cf_sql_varchar">, 
                     <cfqueryparam value="#arguments.emailId#" cfsqltype="cf_sql_varchar">, 
                     <cfqueryparam value="#arguments.userName#" cfsqltype="cf_sql_varchar">, 
                     <cfqueryparam value="#hash(arguments.passWord,'SHA')#" cfsqltype="cf_sql_varchar">,
-                    #local.status_info#)
+                   "1")
             </cfquery>
             <cfif result.generatedkey>
                 <cflocation url="../index.cfm" >

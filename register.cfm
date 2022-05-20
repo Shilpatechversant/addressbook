@@ -11,7 +11,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-data">
-                                  <form method="post" name="registerForm" action="cfc/register.cfc?method=insertData">
+                                  <form method="post" name="registerForm" action="cfc/register.cfc?method=insertData" onsubmit="return validateRegisterForm()">
                                         <div class="text-center d-flex flex-column">
                                             <h1>Sign Up</h1>
                                          </div>

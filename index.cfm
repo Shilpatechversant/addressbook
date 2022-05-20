@@ -14,6 +14,9 @@
                                     <form method="post" name="loginForm" action="cfc/login.cfc?method=loginAction"> 
                                         <div class="text-center d-flex flex-column"> 
                                             <h1>Login</h1>
+                                            <cfif structKeyExists(url,"message")>
+                                                <cfoutput>#url.message#</cfoutput>
+                                            </cfif>
                                         </div>
                                         <div class="forms-inputs mb-5">
                                             <input name="username" class="t-field" autocomplete="off" type="text" placeholder="Username"/>
