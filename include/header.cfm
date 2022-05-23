@@ -20,6 +20,12 @@
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">            
           </ul>
           <div class="form-inline my-2 my-lg-0">
+            <cfif StructKeyExists(session, "loggedin") >
+              <a href="cfc/logout.cfc?id=logout" class="my-sm-2 mr-sm-3"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <cfelse>
+              <a href="register.cfm" class="mr-sm-5"><i class="fas fa-user-alt"></i> Sign Up</a>
+              <a href="index.cfm" class="my-sm-2 mr-sm-3"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </cfif>
           </div>
         </div>
     </nav>
