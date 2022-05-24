@@ -6,6 +6,9 @@
         <div class="p-3">  <a href="" class=" "><i class="fa fa-file-excel"></i></a></div>
         <div class="p-3">  <button onclick=""><i class="fa fa-print"></i></button></div>
     </div>
+    <cfif structKeyExists(url,"message")>
+        <cfoutput>#url.message#</cfoutput>
+    </cfif>
     <div class="row justify-content-md-center tab2">
             <div class="col col-lg-2 s-profile">
             <img src="assets/img/pro1.jpg" class="profile-section" />
@@ -15,6 +18,7 @@ Create Contact</button>
            
             </div>
             <div class="col  col-lg-8">
+
                      <table class="table table-striped">
                 <thead>
                     <tr>
