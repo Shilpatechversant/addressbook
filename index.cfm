@@ -1,4 +1,7 @@
-<cfinclude  template = "include/header.cfm"  runOnce = "true">             
+<cfinclude  template = "include/header.cfm"  runOnce = "true"> 
+     <cfset artists = entityLoad("users")> 
+        <cfdump var ="#artists#">
+        <cfabort>
         <div class="container box-section">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-9">

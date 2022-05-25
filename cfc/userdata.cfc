@@ -55,27 +55,27 @@
         <cfelse>
             <cfset img = "">
         </cfif>
-        <cfquery datasource="newtech" result="result">
-                INSERT INTO coldfusion.users (user_id, title, fname, lname, gender, dob, image, address, street, email, phone) VALUES (
-                    <cfqueryparam value="#Session.userId#" cfsqltype="CF_SQL_INTEGER">,
-                    <cfqueryparam value="#arguments.title#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.fname#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.lname#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.gender#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.dob#" cfsqltype="cf_sql_date">,
-                    <cfqueryparam value="#img#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.address#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.street#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.phone#" cfsqltype="cf_sql_varchar">)
-        </cfquery>
-        <cfif result.generatedkey>
-             <cfset message = "Contact Added Successfully.">
+        <cfset artists = entityLoad("users")> 
+        <cfdump var ="#artists#">
+        <cfabort>
+
+        <cfset contactObj = EntityNew("users")>      
+            <cfset contactObj.setUser_id(#Session.userId#)>  
+            <cfset contactObj.setTitle(#arguments.title#)>  
+            <cfset contactObj.setFname(#arguments.fname#)>  
+            <cfset contactObj.setLname(#arguments.lname#)>
+            <cfset contactObj.setGender(#arguments.gender#)>
+            <cfset contactObj.setDob(#arguments.dob#)>
+            <cfset contactObj.setImage(#img#)>
+            <cfset contactObj.setAddress(#arguments.address#)>
+            <cfset contactObj.setStreet(#arguments.street#)>
+            <cfset contactObj.setEmail(#arguments.email#)>
+            <cfset contactObj.setPhone(#arguments.phone#)>
+        <cfset EntitySave(contactObj)>
+       <cfset  ormflush()>
+            <cfset message = "Contact Added Successfully.">
             <cflocation url="../dashboard.cfm?message=#message#" addtoken="no">
-        <cfelse>
-            <cfset message = "Please try after some time...">
-            <cflocation url="../dashboard.cfm?message=#message#">         
-        </cfif>     
+       
 </cffunction>
 
 </cfcomponent>
