@@ -124,4 +124,14 @@
        <cflocation url="../dashboard.cfm?message=#message#" addtoken="no">
 </cffunction>
 
+<cffunction  name="deleteUser" access="public">
+    <cfargument name="userId" type="any" required="true" />
+    <cfquery datasource="newtech" name="delete_page">
+        DELETE 
+        FROM coldfusion.users
+        WHERE id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#userId#">
+    </cfquery>
+    <cfreturn>
+</cffunction>
+
 </cfcomponent>
