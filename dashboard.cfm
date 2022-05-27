@@ -30,7 +30,12 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Create Contact</button>
             </div>
             <div class="col  col-lg-8">
-                <cfinvoke component="cfc.userdata" method="getUserInfo" returnVariable="userData">
+            <ORMRelaod()>
+            <cfset test = entityLoad("contacts")>           
+            <cfset jsonise = serializeJSON( test)>
+            <!--- <cfdump var =#jsonise#> --->
+            <cfset uData = deserializeJSON(jsonise)> 
+               
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -43,7 +48,8 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
-                        <cfoutput query="userData">
+                    <cfoutput>
+                        <cfloop array="#uData#" index="userData">
                             <tbody>
                                 <tr>
                                     <th scope="row">
@@ -227,8 +233,9 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </cfoutput>
-                    </table>
+                        </cfloop>
+                    </cfoutput>
+                </table>
             </div>
         </div>
         <cfinclude template="create_contact.cfm" runOnce="true">

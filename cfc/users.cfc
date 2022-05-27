@@ -1,4 +1,4 @@
-component persistent="true" entityname="users" table="users"  {
+component persistent="true" entityname="users" table="coldfusion.users"  {
     property name="id" column="id" fieldtype="id" generator="increment";
     property name="user_id" column="user_id" ormtype="string";
     property name="title" column="title" ormtype="string";
