@@ -169,4 +169,10 @@
     </cfquery>
     <cfreturn>
 </cffunction>
+<cffunction  name="getAllContact" access="public">
+    <cfquery name="usersData" datasource="newtech">
+        SELECT * FROM coldfusion.contacts WHERE user_id=<cfqueryparam value="#Session.userId#" CFSQLType="CF_SQL_INTEGER">
+    </cfquery>
+    <cfreturn usersData>
+</cffunction>
 </cfcomponent>

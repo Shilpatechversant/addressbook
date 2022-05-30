@@ -5,17 +5,17 @@
                 <h4>Welcome Dashboard,</h4>
             </div>
             <div class="p-3">
-                <a href="" class="btn-success">
+                <a href="contact_pdf.cfm" class="btn-success">                
                     <i class="fa fa-file-pdf"></i>
                 </a>
             </div>
             <div class="p-3">
-                <a href="" class=" ">
+                <a href="contact_exel.cfm" class=" ">
                     <i class="fa fa-file-excel"></i>
                 </a>
             </div>
             <div class="p-3">
-                <button onclick="">
+                <button onclick="printDiv('tableDataView')" >
                     <i class="fa fa-print"></i>
                 </button>
             </div>
@@ -29,7 +29,7 @@
                 <h4>Shilpa S Pillai</h4>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Create Contact</button>
             </div>
-            <div class="col  col-lg-8">
+            <div class="col  col-lg-8" id="tableDataView">
             <ORMRelaod()>
             <cfset test = entityLoad("contacts")>           
             <cfset jsonise = serializeJSON( test)>
@@ -239,7 +239,15 @@
             </div>
         </div>
         <cfinclude template="create_contact.cfm" runOnce="true">
-
+        <script>
+            function printDiv(divName) {
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;   
+                document.body.innerHTML = printContents;   
+                window.print();   
+                document.body.innerHTML = originalContents;
+            }
+        </script>
 </div>
     </div>
     <cfinclude template="include/footer.cfm" runOnce="true">
