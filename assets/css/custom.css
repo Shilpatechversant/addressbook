@@ -75,3 +75,8 @@ body{
 {
     border-bottom: 2px rgb(22, 190, 95);
 }
+.fa-google-plus {
+    font-size: 35px;
+    color: #f83535;
+    margin: 10px;
+}

@@ -29,7 +29,14 @@
                                         </div>
                                     </form>    
                                 </div>
-                                <div class="success-data">                                  
+                                <div class="success-data">                                      
+                                    <div class="text-center d-flex flex-column"> 
+                                    <i class='bx bxs-badge-check'></i> 
+                                    <span class="text-center fs-1">
+                                    Or Sign in Using <br>
+                                    <form method="post" action="cfc/google.cfc?method=googleLogin">                                
+                                     <button type="submit" name="google-btn" class="social-btn">
+                                     <i class="fab fa-google-plus"></i></button></form><br>                                                              
                                     Don't have an account? <a href="register.cfm">Register Here</a>
                                 </div>
                             </div>                            
