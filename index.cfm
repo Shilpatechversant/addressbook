@@ -34,7 +34,9 @@
                                     <i class='bx bxs-badge-check'></i> 
                                     <span class="text-center fs-1">
                                     Or Sign in Using <br>
-                                    <form method="post" action="cfc/google.cfc?method=googleLogin">                                
+                                             <a href="cfc/login.cfc?method=facebookLogin"><button name="face-btn" class="social-btn"><i class="fab fa-facebook"></i></button> </a>  
+                                    <form method="post" action="cfc/google.cfc?method=googleLogin"> 
+                                                          
                                      <button type="submit" name="google-btn" class="social-btn">
                                      <i class="fab fa-google-plus"></i></button></form><br>                                                              
                                     Don't have an account? <a href="register.cfm">Register Here</a>
@@ -45,4 +47,6 @@
                 </div>
             </div>
         </div>
+
+</script>
 <cfinclude  template = "include/footer.cfm"  runOnce = "true">          
