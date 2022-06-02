@@ -15,8 +15,8 @@
                 </a>
             </div>
             <div class="p-3">
-                <button onclick="printDiv('tableDataView')" >
-                    <i class="fa fa-print"></i>
+                <button>
+                  <a href="cfc/print.cfc?method=printpdfdoc">  <i class="fa fa-print"></i></a>
                 </button>
             </div>
         </div>
@@ -31,9 +31,8 @@
             </div>
             <div class="col  col-lg-8" id="tableDataView">
             <ORMRelaod()>
-            <cfset test = entityLoad("contacts")>           
+            <cfset test = entityLoad("contacts",{user_id="#Session.userId#"})>           
             <cfset jsonise = serializeJSON( test)>
-            <!--- <cfdump var =#jsonise#> --->
             <cfset uData = deserializeJSON(jsonise)> 
                
                     <table class="table table-striped">

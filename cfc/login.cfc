@@ -44,7 +44,7 @@
             username = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#resFb.id#">AND
             fullname = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#resFb.name#">  
             </cfquery>
-            
+             
             <cfif outputquery.RECORDCOUNT GT 0>
                 <cfset Session.userId = outputquery.id>
                 <cfset Session.loggedin = true />
