@@ -1,25 +1,29 @@
+<ORMRelaod()>
+<cfset test = entityLoad("contacts",{user_id="#Session.userId#"})>           
+<cfset jsonise = serializeJSON( test)>
+<cfset uData = deserializeJSON(jsonise)> 
 <cfinclude template="include/header.cfm" runOnce="true">
-    <div class="container-fluid">
-        <div class="d-flex justify-content-end tab1">
-            <div class="mr-auto p-2">
-                <h4>Welcome Dashboard,</h4>
-            </div>
-            <div class="p-3">
-                <a href="contact_pdf.cfm" class="btn-success">                
-                    <i class="fa fa-file-pdf"></i>
-                </a>
-            </div>
-            <div class="p-3">
-                <a href="contact_exel.cfm" class=" ">
-                    <i class="fa fa-file-excel"></i>
-                </a>
-            </div>
-            <div class="p-3">
-                <button>
-                  <a href="cfc/print.cfc?method=printpdfdoc">  <i class="fa fa-print"></i></a>
-                </button>
-            </div>
+<div class="container-fluid">
+    <div class="d-flex justify-content-end tab1">
+        <div class="mr-auto p-2">
+            <h4>Welcome Dashboard,</h4>
         </div>
+        <div class="p-3">
+            <a href="contact_pdf.cfm" class="btn-success">                
+            <i class="fa fa-file-pdf"></i>
+            </a>
+        </div>
+        <div class="p-3">
+            <a href="contact_exel.cfm">
+            <i class="fa fa-file-excel"></i>
+            </a>
+        </div>
+        <div class="p-3">
+            <button>
+            <cfoutput><a href="print.cfm?user_id=#Session.userId#"><i class="fa fa-print"></i></a></cfoutput>            
+            </button>
+        </div>
+    </div>
         <cfif structKeyExists(url,"message")>
             <cfoutput>#url.message#</cfoutput>
         </cfif>
@@ -29,12 +33,7 @@
                 <h4>Shilpa S Pillai</h4>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Create Contact</button>
             </div>
-            <div class="col  col-lg-8" id="tableDataView">
-            <ORMRelaod()>
-            <cfset test = entityLoad("contacts",{user_id="#Session.userId#"})>           
-            <cfset jsonise = serializeJSON( test)>
-            <cfset uData = deserializeJSON(jsonise)> 
-               
+            <div class="col  col-lg-8" id="tableDataView">              
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -247,6 +246,6 @@
                 document.body.innerHTML = originalContents;
             }
         </script>
-</div>
     </div>
+</div>
     <cfinclude template="include/footer.cfm" runOnce="true">

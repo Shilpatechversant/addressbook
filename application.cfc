@@ -1,32 +1,50 @@
-component {
-    this.name = "Addressbook App";
-    this.datasource = "newtech";
-    this.sessionManagement = true;
-    this.sessionTimeout = CreateTimeSpan(0, 0, 30, 0);
-    this.ormEnabled = true;
-    this.ormSettings = { logsql : true,
-        cflocation : ['cfc/contacts'],    
+
+
+<cfcomponent output="false">
+    <cfset this.name="Addressbook App">
+    <cfset this.sessionManagement = "true" >
+    <cfset this.sessionTimeout = createTimespan(0,0,1,0)>
+    <cfset This.applicationtimeout=createTimespan(2,0,0,0)> 
+    <cfset this.setClientCookies=false>
+    <cfset this.scriptProtect="all">
+    <cfset this.ormenabled="true"> 
+    <cfset this.datasource="newtech">
+    <cfset this.ormSettings = { 
+        logsql : true,
+        cflocation : ['cfc/contacts'],
+        dbcreate : "none",  
         dialect : "org.hibernate.dialect.MySQL5Dialect",
         datasource : "newtech",
-        useDBForMapping : false    
-     };  
-   function onRequestStart(requestname){ 
+        useDBForMapping : false
+    }>
 
-        if(!structKeyExists(session, "userId") or !structKeyExists(session, "loggedin") ){
-            if(!(FindNoCase("index",requestname) > 0 or FindNoCase("register",requestname) > 0 or FindNoCase("login",requestname) > 0 or FindNoCase("google",requestname) > 0)){
-               location("/addressbook/index.cfm",false);
-            }
-        }
-    }
+    <!---OnApplicationStart Method--->
+    <cffunction name="OnApplicationStart" returntype="boolean">
+        <cfset application.obj=createObject('component','cfc.userdata')>
+        <cfreturn true>
+    </cffunction>
 
-    function onError(Exception,EventName){
-        writeOutput('<center><h1>An error occurred</h1>
-		<p>Please Contact the developer</p>
-		<p>Error details: #Exception.message#</p></center>');
-    }
+    <!---OnRequestStart Method--->
+    <cffunction name="OnRequestStart" returntype="boolean">
+        <cfset this.onApplicationStart()>
+        <cfif isDefined('url.logout')>
+            <cflocation  url="index.cfm" addtoken="no">
+        </cfif>
+        <cfreturn true>
+    </cffunction>
 
-    function onMissingTemplate(targetPage){
-        writeOutput('<center><h1>This Page is not avilable.</h1>
-		<p>Please go back:</p></center>');
-    }
-    }
+    <cffunction name="onSessionStart" returnType="void" output="false">
+        <cfset session.started = now()>   
+        <cfif structKeyExists(session,'userId')>
+            <cfset s="session">
+        
+        <cfelse>
+            <cfset this.onApplicationStart()>
+        </cfif>
+  </cffunction>
+    
+    <cffunction name="onSessionEnd" returntype="void">
+        <cfargument name="sessionScope" type="any" required="true" hint="Session Scope"/>
+        <cfdump var="#arguments.sessionScope.dateInitialized# : #now()#"/>
+    </cffunction>    
+</cfcomponent>

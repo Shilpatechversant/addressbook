@@ -80,3 +80,12 @@ body{
     color: #f83535;
     margin: 10px;
 }
+.fa-facebook {
+    font-size: 35px;
+    color: #5050e7;
+    margin: 10px;
+}
+.social-btn {
+    background: none;
+    border: none;
+}

@@ -142,7 +142,7 @@
             <cfset img = "#arguments.old_file#">
     </cfif>
         <cfquery datasource="newtech">
-            UPDATE coldfusion.users
+            UPDATE coldfusion.contacts 
             SET 
             title=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.title#">,
             fname=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fname#">,
@@ -169,10 +169,19 @@
     </cfquery>
     <cfreturn>
 </cffunction>
+
 <cffunction  name="getAllContact" access="public">
     <cfquery name="usersData" datasource="newtech">
         SELECT * FROM coldfusion.contacts WHERE user_id=<cfqueryparam value="#Session.userId#" CFSQLType="CF_SQL_INTEGER">
     </cfquery>
     <cfreturn usersData>
 </cffunction>
+
+ <cffunction name="printFunc" output="true" access="public">
+        <cfargument  name="user_id" type="integer">
+        <cfquery name="print_res" result="p_res">
+            SELECT * FROM coldfusion.contacts WHERE user_id=<cfqueryparam value="#arguments.user_id#" cfsqltype="CF_SQL_INTEGER">
+        </cfquery>
+        <cfreturn print_res>
+    </cffunction>
 </cfcomponent>
