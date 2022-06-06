@@ -1,5 +1,5 @@
 <cfcomponent name="login" persistent="true">
-    <cffunction name="loginAction" access="remote">
+    <cffunction name="loginAction" access="remote"  output="false">
         <cfargument name="username" type="string" required="true">
         <cfargument name="password" type="string" required="true">
             <cfif arguments.username eq "">
@@ -22,7 +22,7 @@
                     <cflocation url="../index.cfm?message=#local.msg#">
             </cfif>
     </cffunction>
-    <cffunction name="facebookLogin" access="remote">
+    <cffunction name="facebookLogin" access="remote"  output="false">
         <cfoauth type="Facebook" clientid="742288636814574" secretkey="ef6a3a089d972bec54affe6d8ccb35c0" result="resFb" redirecturi="http://localhost:8500/addressbook/cfc/login.cfc?method=facebookLogin">
             <cfquery name="outputquery" datasource="newtech"> 
             SELECT *FROM coldfusion.login WHERE username = <cfqueryparam CFSQLType="cf_sql_varchar" value="#resFb.id#">AND fullname = <cfqueryparam CFSQLType="cf_sql_varchar" value="#resFb.name#">

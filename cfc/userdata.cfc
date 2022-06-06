@@ -1,5 +1,5 @@
-<cfcomponent name="userdata">
-    <cffunction  name="createContact" access="remote">
+<cfcomponent name="userdata" accessors="TRUE">
+    <cffunction  name="createContact" access="remote" output="true">
         <cfargument  name="title" type="string">
         <cfargument  name="fname" type="string">
         <cfargument  name="lname" type="string">
@@ -78,69 +78,69 @@
             </cfif>        
     </cffunction>
 
-<cffunction name="getUserInfo" access="public" >
+<cffunction name="getUserInfo" access="public" output="true">
     <cfquery name="usersData" datasource="newtech">
         SELECT * FROM coldfusion.users WHERE user_id= <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#Session.userId#">
     </cfquery>
 <cfreturn usersData>
 </cffunction>
 
-<cffunction  name="updateContact" access="remote">
-        <cfargument  name="title" type="string">
-        <cfargument  name="fname" type="string">
-        <cfargument  name="lname" type="string">
-        <cfargument  name="gender" type="string">
-        <cfargument  name="dob" type="string">
-        <cfargument  name="address" type="string">
-        <cfargument  name="street" type="string">
-        <cfargument  name="email" type="string">
-        <cfargument  name="phone" type="string">
-            <cfif arguments.title eq "">
-                <cfset local.msg = "Please Fill Title">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>      
-            <cfif arguments.fname eq "">
-                <cfset local.msg = "Please Fill First Name">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>
-            <cfif arguments.lname eq "">
-                <cfset local.msg = "Please Fill Last Name">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>
-            <cfif arguments.gender eq "">
-                <cfset local.msg = "Please Fill Gender">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>
-            <cfif arguments.dob eq "">
-                <cfset local.msg = "Please Fill Date Of Birth">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>
-            <cfif arguments.address eq "">
-                <cfset local.msg = "Please Fill Address">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>
-            <cfif arguments.street eq "">
-                <cfset local.msg = "Please Fill Street">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>
-            <cfif arguments.email eq "">
-                <cfset local.msg = "Please Fill email">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>
-            <cfif arguments.phone eq "">
-                <cfset local.msg = "Please Fill phone">
-                <cflocation url="../dashboard.cfm?message=#local.msg#">
-            </cfif>    
-    <cfif form.file != "">
-        <cffile action="upload"
-        fileField="file"
-        destination="C:\ColdFusion2021\cfusion\wwwroot\addressbook\assets\userImage"
-        nameconflict="makeunique"
-        result="img">
-        <cfset img = "assets/userImage/#img.clientFile#">
-            <cfelse>
-            <cfset img = "#arguments.old_file#">
-    </cfif>
+<cffunction  name="updateContact" access="remote" output="true">
+    <cfargument  name="title" type="string">
+    <cfargument  name="fname" type="string">
+    <cfargument  name="lname" type="string">
+    <cfargument  name="gender" type="string">
+    <cfargument  name="dob" type="string">
+    <cfargument  name="address" type="string">
+    <cfargument  name="street" type="string">
+    <cfargument  name="email" type="string">
+    <cfargument  name="phone" type="string">
+    <cfif arguments.title eq "">
+        <cfset local.msg = "Please Fill Title">
+             <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>      
+        <cfif arguments.fname eq "">
+            <cfset local.msg = "Please Fill First Name">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>
+        <cfif arguments.lname eq "">
+            <cfset local.msg = "Please Fill Last Name">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>
+        <cfif arguments.gender eq "">
+            <cfset local.msg = "Please Fill Gender">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>
+        <cfif arguments.dob eq "">
+            <cfset local.msg = "Please Fill Date Of Birth">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>
+        <cfif arguments.address eq "">
+            <cfset local.msg = "Please Fill Address">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>
+        <cfif arguments.street eq "">
+            <cfset local.msg = "Please Fill Street">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>
+        <cfif arguments.email eq "">
+            <cfset local.msg = "Please Fill email">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>
+        <cfif arguments.phone eq "">
+            <cfset local.msg = "Please Fill phone">
+            <cflocation url="../dashboard.cfm?message=#local.msg#">
+        </cfif>    
+        <cfif form.file != "">
+            <cffile action="upload"
+            fileField="file"
+            destination="C:\ColdFusion2021\cfusion\wwwroot\addressbook\assets\userImage"
+            nameconflict="makeunique"
+            result="img">
+            <cfset img = "assets/userImage/#img.clientFile#">
+                <cfelse>
+                <cfset img = "#arguments.old_file#">
+        </cfif>
         <cfquery datasource="newtech">
             UPDATE coldfusion.contacts 
             SET 
@@ -160,7 +160,7 @@
        <cflocation url="../dashboard.cfm?message=#message#" addtoken="no">
 </cffunction>
 
-<cffunction  name="deleteUser" access="public">
+<cffunction  name="deleteUser" access="public" output="true">
     <cfargument name="userId" type="any" required="true" />
     <cfquery datasource="newtech" name="delete_page">
         DELETE 
@@ -170,7 +170,7 @@
     <cfreturn>
 </cffunction>
 
-<cffunction  name="getAllContact" access="public">
+<cffunction  name="getAllContact" access="public"  output="true">
     <cfquery name="usersData" datasource="newtech">
         SELECT * FROM coldfusion.contacts WHERE user_id=<cfqueryparam value="#Session.userId#" CFSQLType="CF_SQL_INTEGER">
     </cfquery>
@@ -178,10 +178,12 @@
 </cffunction>
 
  <cffunction name="printFunc" output="true" access="public">
-        <cfargument  name="user_id" type="integer">
-        <cfquery name="print_res" result="p_res">
-            SELECT * FROM coldfusion.contacts WHERE user_id=<cfqueryparam value="#arguments.user_id#" cfsqltype="CF_SQL_INTEGER">
-        </cfquery>
-        <cfreturn print_res>
-    </cffunction>
+    <cfargument  name="user_id" type="integer">
+    <cfquery name="print_res" result="p_res">
+        SELECT * FROM coldfusion.contacts WHERE 
+        user_id=<cfqueryparam value="#arguments.user_id#" cfsqltype="CF_SQL_INTEGER">
+    </cfquery>
+    <cfreturn print_res>
+</cffunction>
+
 </cfcomponent>

@@ -1,3 +1,6 @@
+<cfif Not structKeyExists(Session,'userId')>
+   <cflocation  url="index.cfm">
+</cfif>
 <ORMRelaod()>
 <cfset test = entityLoad("contacts",{user_id="#Session.userId#"})>           
 <cfset jsonise = serializeJSON( test)>
@@ -236,16 +239,7 @@
                 </table>
             </div>
         </div>
-        <cfinclude template="create_contact.cfm" runOnce="true">
-        <script>
-            function printDiv(divName) {
-                var printContents = document.getElementById(divName).innerHTML;
-                var originalContents = document.body.innerHTML;   
-                document.body.innerHTML = printContents;   
-                window.print();   
-                document.body.innerHTML = originalContents;
-            }
-        </script>
+        <cfinclude template="create_contact.cfm" runOnce="true">       
     </div>
 </div>
     <cfinclude template="include/footer.cfm" runOnce="true">

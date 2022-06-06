@@ -1,7 +1,5 @@
-<cfcomponent>
-
-    <cffunction name="insertData" access="remote">
-
+<cfcomponent accessors="TRUE">
+    <cffunction name="insertData" access="remote" output="true">
         <cfargument name="fullName" type="string" required="true" />
         <cfargument name="emailId" type="string" required="true"/>
         <cfargument name="userName" type="string" required="true" />

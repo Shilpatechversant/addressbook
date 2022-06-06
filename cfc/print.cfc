@@ -1,10 +1,10 @@
  <cfcomponent persistent="true">
     <cffunction  name="printpdfdoc" access="remote">           
-                     <ORMRelaod()>
-            <cfset test = entityLoad("contacts",{user_id="#Session.userId#"})>           
-            <cfset jsonise = serializeJSON( test)>
-            <cfset contactprint = deserializeJSON(jsonise)> 
-            <cfdocument format="PDF"  filename="../files/file.pdf" overwrite="Yes">
+        <ORMRelaod()>
+        <cfset test = entityLoad("contacts",{user_id="#Session.userId#"})>           
+        <cfset jsonise = serializeJSON( test)>
+        <cfset contactprint = deserializeJSON(jsonise)> 
+        <cfdocument format="PDF"  filename="../files/file.pdf" overwrite="Yes">
             <table class="table">
                 <thead>
                     <tr>
@@ -25,10 +25,10 @@
                     </cfoutput>
                 </tbody>
             </table>
-            </cfdocument> 
+        </cfdocument> 
             <cfprint type="pdf" source="../files/file.pdf" printer=" Microsoft Print to PDF">
             <cfheader name="content-diposition" value="inline; filename=contact.pdf">
             <cfcontent type="application/pdf" file="C:\Coldfusion2021\cfusion\wwwroot\addressbook\files\file.pdf"/>          
-             <cflocation url ="http://127.0.0.1:8500/addressbook/dashboard.cfm">
-        </cffunction>
+            <cflocation url ="http://127.0.0.1:8500/addressbook/dashboard.cfm">
+    </cffunction>
 </cfcomponent>
