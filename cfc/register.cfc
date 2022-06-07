@@ -7,23 +7,23 @@
         <cfargument name="confirmPassWord" type="string" required="true"/>
 
         <cfif arguments.fullName eq "">
-            <cfset local.variable = "Please fill the name">
-            <cflocation url="../register.cfm?message=#local.variable#">
+            <cfset local.variable = "3">
+            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
         </cfif>
 
         <cfif arguments.emailId eq "" >
-            <cfset local.variable = "Please fill the Email field">
-            <cflocation url="../register.cfm?message=#local.variable#">
+            <cfset local.variable = "4">
+            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
         </cfif>
 
         <cfif arguments.userName eq "">
-            <cfset local.variable = "Please fill the Username field">
-            <cflocation url="../register.cfm?message=#local.variable#">
+            <cfset local.variable = "5">
+            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
         </cfif>
 
         <cfif arguments.passWord neq arguments.confirmPassWord>
-            <cfset local.variable = "Please fill the password and confirm password as same">
-            <cflocation url="./register.cfm?message=#local.variable#">
+            <cfset local.variable = "6">
+            <cflocation url="./register.cfm?message=#local.variable#" addtoken ="no">
         </cfif>
 
         <cfquery name="emailcheck" datasource="newtech">
@@ -34,7 +34,7 @@
         
         <cfif emailcheck.recordcount >
             <cfset local.variable = "already existing this email">
-            <cflocation url="../register.cfm?message=#local.variable#">
+            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
         <cfelse>           
             <cfquery datasource="newtech" result="result">
                 INSERT INTO coldfusion.login (fullname, email, username, password,status) VALUES (
@@ -45,10 +45,11 @@
                    "1")
             </cfquery>
             <cfif result.generatedkey>
-                <cflocation url="../index.cfm" >
+               <cfset local.message = "1">
+                <cflocation url="../index.cfm?message=#local.message#" addtoken ="no">
             <cfelse>
-                <cfset local.variable = "Please try after some time...">
-                <cflocation url="../register.cfm?message=#local.variable#">
+                <cfset local.variable = "2">
+                <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
             </cfif>
         </cfif>
     </cffunction>

@@ -1,3 +1,4 @@
+<cfparam  name="message" default="v">
 <cfinclude  template = "include/header.cfm"  runOnce = "true"> 
         <div class="container box-section">
             <div class="row d-flex justify-content-center">
@@ -15,9 +16,35 @@
                                         <div class="text-center d-flex flex-column">
                                             <h1>Sign Up</h1>
                                          </div>
-                                        <cfif structKeyExists(url,"message")>
-                                            <cfoutput>#url.message#</cfoutput>
-                                        </cfif>
+                                         <div class="row pt-5">
+                                            <cfif message EQ '2'>
+                                                <div class="alert alert-danger alert-dismissible">
+                                                    <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                        Registration failed!!
+                                                </div>  
+                                            <cfelseif message EQ '3'>
+                                                <div class="alert alert-danger alert-dismissible">
+                                                    <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                        Please fill Fullname!!
+                                                </div>  
+                                            <cfelseif message EQ '4'>
+                                                <div class="alert alert-danger alert-dismissible">
+                                                    <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                        Please fill Email!!
+                                                </div>   
+                                            <cfelseif message EQ '5'>
+                                                <div class="alert alert-danger alert-dismissible">
+                                                    <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                        Please fill username!!
+                                                </div>  
+                                            <cfelseif message EQ '5'>
+                                                <div class="alert alert-danger alert-dismissible">
+                                                    <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                       Password and confirm password should be same!!
+                                                </div>                           
+                                            </cfif> 
+                                        </div>
+
                                         <div class="form-group">
                                             <input name="fullName" class="t-field" autocomplete="off" type="text" placeholder="Full Name" />
                                         </div>

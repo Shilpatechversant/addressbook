@@ -1,3 +1,4 @@
+<cfparam  name="status" default="v">  
 <cfif Not structKeyExists(Session,'userId')>
    <cflocation  url="index.cfm">
 </cfif>
@@ -26,14 +27,28 @@
             <cfoutput><a href="print.cfm?user_id=#Session.userId#"><i class="fa fa-print"></i></a></cfoutput>            
             </button>
         </div>
-    </div>
-        <cfif structKeyExists(url,"message")>
-            <cfoutput>#url.message#</cfoutput>
-        </cfif>
+        </div>
+        <cfif status EQ hash('2','sha')>
+            <div class="alert alert-success alert-dismissible">
+                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                   Please Fill all the Fields!!
+            </div> 
+        <cfelseif status EQ hash('3','sha')>
+            <div class="alert alert-success alert-dismissible">
+                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Contact Deleted Successfully!!
+            </div>
+        <cfelseif status EQ hash('2','sha')>
+            <div class="alert alert-success alert-dismissible">
+                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Contact Edited Successfully!!
+            </div>  
+        </cfif>                              
+        
         <div class="row justify-content-md-center tab2">
             <div class="col col-lg-2 s-profile">
                 <img src="assets/img/pro1.jpg" class="profile-section" />
-                <h4>Shilpa S Pillai</h4>
+                <h4><center><cfoutput>User</cfoutput></center></h4>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Create Contact</button>
             </div>
             <div class="col  col-lg-8" id="tableDataView">              
@@ -155,82 +170,82 @@
                                                 </div>
                                             </div>
                                         </div>
-                                            <div class="modal fade bd-example-modal-lg viewModal-#userData.id#" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-md" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                               <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <h3>Personal Contact</h3>
-                                                                        <hr>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        Name 
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                        : #userData.title#  #userData.fname# #userData.lname#
-                                                                    </div>
+                                        <div class="modal fade bd-example-modal-lg viewModal-#userData.id#" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-md" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h3>Personal Contact</h3>
+                                                                    <hr>
                                                                 </div>
-                                                                <div class="row mt-4">
-                                                                    <div class="col-md-3">
-                                                                     Gender 
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                    : #userData.gender#
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4">
-                                                                    <div class="col-md-3">
-                                                                     DOB 
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                    : #userData.dob#
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4">
-                                                                    <div class="col-md-3">
-                                                                     Address 
-                                                                    </div>
-                                                                <div class="col-md-9">
-                                                                     : #userData.address#, #userData.street#
-                                                                </div>
-                                                            </div> 
-                                                            <div class="row mt-4">
                                                                 <div class="col-md-3">
-                                                                 Email 
+                                                                    Name 
                                                                 </div>
                                                                 <div class="col-md-9">
-                                                                : #userData.email#
+                                                                    : #userData.title#  #userData.fname# #userData.lname#
                                                                 </div>
                                                             </div>
                                                             <div class="row mt-4">
-                                                               <div class="col-md-3">
-                                                                Phone 
+                                                                <div class="col-md-3">
+                                                                    Gender 
                                                                 </div>
-                                                               <div class="col-md-9">
-                                                                : #userData.phone#
-                                                               </div>
+                                                                <div class="col-md-9">
+                                                                : #userData.gender#
+                                                                </div>
                                                             </div>
                                                             <div class="row mt-4">
                                                                 <div class="col-md-3">
-                                                                 Image 
-                                                                 </div>
-                                                                <div class="col-md-9">
-                                                                 : <img src="#userData.image#" width="100px" height="100px" >
+                                                                    DOB 
                                                                 </div>
-                                                            </div>   
-                                                        </div>                                                       
-                                                        <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <div class="col-md-9">
+                                                                : #userData.dob#
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mt-4">
+                                                                <div class="col-md-3">
+                                                                    Address 
+                                                                </div>
+                                                            <div class="col-md-9">
+                                                                    : #userData.address#, #userData.street#
+                                                            </div>
+                                                        </div> 
+                                                        <div class="row mt-4">
+                                                            <div class="col-md-3">
+                                                                Email 
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                            : #userData.email#
+                                                            </div>
                                                         </div>
+                                                        <div class="row mt-4">
+                                                            <div class="col-md-3">
+                                                            Phone 
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                            : #userData.phone#
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-4">
+                                                            <div class="col-md-3">
+                                                                Image 
+                                                                </div>
+                                                            <div class="col-md-9">
+                                                                : <img src="#userData.image#" width="100px" height="100px" >
+                                                            </div>
+                                                        </div>   
+                                                    </div>                                                       
+                                                    <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -242,4 +257,4 @@
         <cfinclude template="create_contact.cfm" runOnce="true">       
     </div>
 </div>
-    <cfinclude template="include/footer.cfm" runOnce="true">
+<cfinclude template="include/footer.cfm" runOnce="true">

@@ -10,41 +10,50 @@
         <cfargument  name="email" type="string">
         <cfargument  name="phone" type="string">
             <cfif arguments.title eq "">
-                <cfset local.msg = "Please Fill Title">
+                <cfset local.msg=hash('2','sha')>
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>      
             <cfif arguments.fname eq "">
-                <cfset local.msg = "Please Fill First Name">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
             <cfif arguments.lname eq "">
-                <cfset local.msg = "Please Fill Last Name">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
             <cfif arguments.gender eq "">
-                <cfset local.msg = "Please Fill Gender">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
             <cfif arguments.dob eq "">
-                <cfset local.msg = "Please Fill Date Of Birth">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
             <cfif arguments.address eq "">
-                <cfset local.msg = "Please Fill Address">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
             <cfif arguments.street eq "">
-                <cfset local.msg = "Please Fill Street">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
             <cfif arguments.email eq "">
-                <cfset local.msg = "Please Fill email">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
             <cfif arguments.phone eq "">
-                <cfset local.msg = "Please Fill phone">
+                <cfset local.msg = "2">
                 <cflocation url="../dashboard.cfm?message=#local.msg#">
             </cfif>
+            <cfquery name="address_email" datasource="newtech" result="email_res">
+                SELECT * FROM coldfusion.contacts 
+                WHERE email=<cfqueryparam value="#arguments.email#" cfsqltype="CF_SQL_VARCHAR">
+            </cfquery>
+             <cfif email_res.RecordCount GT 0>
+                 <cfset local.msg = "Email already exist">
+                <cflocation url="../dashboard.cfm?message=#local.msg#">
+            </cfif>
+
             <cfif form.file != "">
                 <cffile action="upload"
                 fileField="file"
@@ -95,8 +104,8 @@
     <cfargument  name="street" type="string">
     <cfargument  name="email" type="string">
     <cfargument  name="phone" type="string">
-    <cfif arguments.title eq "">
-        <cfset local.msg = "Please Fill Title">
+        <cfif arguments.title eq "">
+            <cfset local.msg = "Please Fill Title">
              <cflocation url="../dashboard.cfm?message=#local.msg#">
         </cfif>      
         <cfif arguments.fname eq "">
@@ -164,7 +173,7 @@
     <cfargument name="userId" type="any" required="true" />
     <cfquery datasource="newtech" name="delete_page">
         DELETE 
-        FROM coldfusion.users
+        FROM coldfusion.contacts
         WHERE id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#userId#">
     </cfquery>
     <cfreturn>

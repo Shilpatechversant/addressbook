@@ -50,7 +50,7 @@
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="pImage">Upload Photo</label>
-                        <input name="file" type="file" id="pImage" class="form-control" />
+                        <input name="file" type="file" accept=".jpeg,.png,.gif,.jpg" id="pImage" class="form-control" />
                     </div>
                 </div>
                 <div class="row mt-4">
