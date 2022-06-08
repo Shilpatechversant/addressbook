@@ -1,4 +1,5 @@
-<cfparam  name="status" default="v">  
+<cfparam  name="message" default="v"> 
+<cfparam  name="status" default="v">   
 <cfif Not structKeyExists(Session,'userId')>
    <cflocation  url="index.cfm">
 </cfif>
@@ -28,22 +29,43 @@
             </button>
         </div>
         </div>
-        <cfif status EQ hash('2','sha')>
+        <cfif status EQ hash('1','sha')>
+            <div class="alert alert-success alert-dismissible">
+                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                   Contact Deleted Successfully!!
+            </div> 
+             <cfelseif message EQ hash('3','sha')>
+            <div class="alert alert-success alert-dismissible">
+                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Deletion Failed!!
+            </div>
+        </cfif>
+        <cfif message EQ hash('2','sha')>
             <div class="alert alert-success alert-dismissible">
                 <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                    Please Fill all the Fields!!
             </div> 
-        <cfelseif status EQ hash('3','sha')>
+        <cfelseif message EQ hash('3','sha')>
             <div class="alert alert-success alert-dismissible">
                 <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    Contact Deleted Successfully!!
+                    Email Already Exist!!
             </div>
-        <cfelseif status EQ hash('2','sha')>
+        <cfelseif message EQ hash('4','sha')>
             <div class="alert alert-success alert-dismissible">
                 <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    Contact Edited Successfully!!
+                    Contact Added Successfully!!
             </div>  
-        </cfif>                              
+        <cfelseif message EQ hash('5','sha')>
+            <div class="alert alert-success alert-dismissible">
+                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Please Try After Some time!!
+            </div> 
+        <cfelseif message EQ hash('8','sha')>
+            <div class="alert alert-success alert-dismissible">
+                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Contact Updated Successfully!!
+            </div> 
+        </cfif>                        
         
         <div class="row justify-content-md-center tab2">
             <div class="col col-lg-2 s-profile">
@@ -75,7 +97,7 @@
                                     <td>#userData.email#</td>
                                     <td>#userData.phone#</td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target=".exampleModal-#userData.id#" >Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onClick="editData(#userData.id#)">Edit</button>
                                     </td>
                                     <td>
                                       <a href="delete.cfm?id=#userData.id#"><button type="button" class="btn btn-sm btn-outline-primary">Delete</button></a>  
@@ -254,7 +276,141 @@
                 </table>
             </div>
         </div>
-        <cfinclude template="create_contact.cfm" runOnce="true">       
+       <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header center">
+                        <h4>Contact Form</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="cfc/result.cfc?method=addContact" name="contactform" enctype="multipart/form-data" onsubmit="return validateContactForm()">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <h5>Personal Contact</h5><hr class="border border-primary">     
+                                </div>
+                                <div class="col-md-2">
+                                    <label  for="tittle">Title*</label>
+                                    <select  name="title" class="form-control" id="tit1" required>
+                                        <option value="">Select</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Miss">Miss</option>
+                                        <option value="Ms">Ms</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <label  for="firstName">First Name*</label>
+                                    <input name="fname" type="text" id="f1" class="form-control" required>
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="LastName">Last Name*</label>
+                                    <input name="lname" type="text" id="lastName" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <label for="gender">Gender*</label>
+                                    <select name="gender" class="form-control" id="gend1" required>
+                                        <option value="">Select</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="DOB">Date Of Birth*</label>
+                                    <input name="dob" type="date" id="dob" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <label for="pImage">Upload Photo</label>
+                                    <input name="file" type="file" accept=".jpeg,.png,.gif,.jpg" id="pImage" class="form-control" />
+                                    <div id="imagecontent">
+                                    </div>                            
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <h5>Contact Details</h5><hr class="border border-primary">  
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="address">Address</label>
+                                    <input name="address" type="text" id="ad1" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="street">Street</label>
+                                    <input name="street" type="text" id="st1" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email">Email*</label>
+                                    <input name="email" type="email" id="email1" class="form-control" onchange="validateEmail();" required/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone">Phone*</label>
+                                    <input name="phone" type="text" id="phone1" class="form-control" required/>
+                                </div>
+                                <input type="hidden" name="id"  id="id" value="0" /> 
+                                  <input type="hidden" name="old_image"  id="old_image" value="0" /> 
+                            </div>                               
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>  
+                </div>
+            </div>
+        </div>    
+       <!-- Modal -->    
     </div>
 </div>
+<script>
+  const editData = (id) => {
+          $.ajax({
+              url: "cfc/userdata.cfc",
+              type: "post", 
+              dataType: "json",
+              data: {
+                  method: "getContact",
+                  id
+              },
+              success: function (data){
+                  if(data && data.length){  
+                      $('#tit1').val(data[0].title);  
+                      $('#f1').val(data[0].fname);
+                      $('#lastName').val(data[0].lname);   
+                      $('#gend1').val(data[0].gender);
+                      $('#dob').val(data[0].dob); 
+                      $('#ad1').val(data[0].address);
+                      $('#st1').val(data[0].street);
+                      $('#email1').val(data[0].email); 
+                      $('#phone1').val(data[0].phone); 
+                      $('#id').val(data[0].id);  
+                      $('#old_image').val(data[0].image);                                                                            
+                      $('#exampleModalCenter').modal('show');
+                  }
+              }
+          });
+      }
+        function validateEmail() {      
+                    var email = document.getElementById("email1").value;
+                    $.ajax({
+                        type: "POST",
+                        url: "cfc/email.cfc",
+                        data: {
+                            datas: email
+                        }
+                        }).done(function(returnresult) {
+                        if (returnresult === "found ") {
+                            alert("already found this email id");
+                        } else {                            
+                            console.log("here reached");
+                        }
+                    })
+}
+</script>
 <cfinclude template="include/footer.cfm" runOnce="true">

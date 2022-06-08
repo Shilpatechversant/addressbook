@@ -20,7 +20,7 @@
             <cfset Session.username=loginResult.username>
             <cfset Session.loggedin=true />
             <cfif Session.loggedin eq true>
-                <cflocation url="../dashboard.cfm">
+                <cflocation url="../dashboard.cfm" addtoken ="no">
             </cfif>
         <cfelse>
             <cfset local.msg="4">

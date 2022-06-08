@@ -128,5 +128,22 @@ function validateRegisterForm() {
       window.print();   
      // document.body.innerHTML = originalContents;
   }
+  function validateEmail() {
+    var email = document.getElementById("email1").value;
+    $.ajax({
+        type: "POST",
+        url: "../cfc/result.cfc",
+        data: {
+            datas: email
+        }
+        }).done(function(returnresult) {
+        if (returnresult === "found ") {
+            alert("already found this email id");
+        } else {
+            document.getElementsByClassName('btn-submit')[0].style.visibility = 'visible';
+            console.log("here reached");
+        }
+    })
+}
 
   }
