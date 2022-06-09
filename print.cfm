@@ -6,10 +6,9 @@
     <cfdocument  format="pdf" filename="contact_data.pdf" overwrite="Yes" >        
             <h3 class="text-center">Contact List</h3> 
             <div id="p_div">       
-                <table class="table" >
+                <table class="table table-bordered" >
                 <thead>
-                <tr>
-                    <th scope="col"></th>
+                <tr>                    
                     <th scope="col">Name</th>
                     <th scope="col">Email Id</th>
                     <th scope="col">Phone Number</th>
@@ -35,12 +34,12 @@
             </div>
     </cfdocument>
     <cfset path =expandPath('.') & '\' &'contact_data.pdf'>
-    <cfprint type="pdf" source="#path#" printer="Fax">     
+    <cfprint type="pdf" source="#path#" printer="Fax">  
+    <h3 class="text-center">Contact List</h3>    
     <div id="print_div">       
                 <table class="table table-bordered">
                     <thead>
-                     <tr>
-                    <th scope="col"></th>
+                     <tr>             
                     <th scope="col">Name</th>
                     <th scope="col">Email Id</th>
                     <th scope="col">Phone Number</th>

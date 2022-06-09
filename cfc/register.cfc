@@ -45,10 +45,10 @@
                    "1")
             </cfquery>
             <cfif result.generatedkey>
-               <cfset local.message = "1">
+               <cfset local.msg=hash('1','sha')>
                 <cflocation url="../index.cfm?message=#local.message#" addtoken ="no">
             <cfelse>
-                <cfset local.variable = "2">
+                <cfset local.msg=hash('2','sha')>
                 <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
             </cfif>
         </cfif>

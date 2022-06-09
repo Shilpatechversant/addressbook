@@ -204,4 +204,22 @@
     <cfreturn getItem />
 </cffunction>
 
+<cffunction name="getEmailData" access="remote" returnFormat = "json" >
+    <cfargument name="email" type="string" required="false" >
+    <cfquery name="contacts"  datasource="newtech" result="email_res">
+        SELECT * FROM coldfusion.contacts
+        WHERE email=<cfqueryparam value="#arguments.email#" cfsqltype="CF_SQL_VARCHAR">
+    </cfquery>  
+    <cfreturn email_res> 
+</cffunction>
+
+<cffunction name="getPhoneData" access="remote" returnFormat = "json" >
+    <cfargument name="phone" type="string" required="false" >
+    <cfquery name="contacts"  datasource="newtech" result="phone_res">
+        SELECT * FROM coldfusion.contacts
+        WHERE phone=<cfqueryparam value="#arguments.phone#" cfsqltype="CF_SQL_VARCHAR">
+    </cfquery>  
+    <cfreturn phone_res> 
+</cffunction>  
+
 </cfcomponent>

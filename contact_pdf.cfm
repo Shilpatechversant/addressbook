@@ -1,15 +1,18 @@
 <cfdocument format="PDF" filename="file.pdf" overwrite="Yes">
     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+    <cfinclude template="include/print_header.cfm" runOnce="true">
     <html>
         <head>
             <title>Pdf View</title>
         </head>
         <body>
             <cfinvoke component="cfc.userdata"  method="getAllContact" returnvariable="userData">
-            <table class="table" >
+            <h3>Contact Details</h3>
+            <hr>
+            <table class="table table-bordered" >
                 <thead>
                 <tr>
-                    <th scope="col"></th>
+                    <th scope="col">Profile photo</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email Id</th>
                     <th scope="col">Phone Number</th>
@@ -21,13 +24,13 @@
                 <tbody>
                 <cfoutput query="userData">
                     <tr>
-                    <th scope="row"><img src="#userData.image#" width="80px" height="80px"></th>
-                    <td>#userData.fname# #userData.lname#</td>
-                    <td>#userData.email#</td>
-                    <td>#userData.phone#</td>
-                    <td>#userData.address#, #userData.street# </td>
-                    <td>#userData.gender#</td>
-                    <td>#userData.dob#</td>
+                        <th scope="row"><img src="#userData.image#" width="80px" height="80px"></th>
+                        <td>#userData.fname# #userData.lname#</td>
+                        <td>#userData.email#</td>
+                        <td>#userData.phone#</td>
+                        <td>#userData.address#, #userData.street# </td>
+                        <td>#userData.gender#</td>
+                        <td>#userData.dob#</td>
                     </tr>
                 </cfoutput> 
                 </tbody>

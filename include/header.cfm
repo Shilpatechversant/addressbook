@@ -8,7 +8,7 @@
         <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
         <link href="./assets/fontawesome/css/all.css" rel="stylesheet" />
         <link href="./assets/css/custom.css" rel="stylesheet" />
-        <script src="./assets/js/custom.js"></script>
+        <script src="./assets/js/custom.js"></script>    
     </head>
     <body>
         <nav class="navbar navbar-expand-lg nav-bar">

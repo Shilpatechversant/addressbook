@@ -34,7 +34,7 @@
                 <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                    Contact Deleted Successfully!!
             </div> 
-             <cfelseif message EQ hash('3','sha')>
+             <cfelseif status EQ hash('3','sha')>
             <div class="alert alert-success alert-dismissible">
                 <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     Deletion Failed!!
@@ -70,7 +70,7 @@
         <div class="row justify-content-md-center tab2">
             <div class="col col-lg-2 s-profile">
                 <img src="assets/img/pro1.jpg" class="profile-section" />
-                <h4><center><cfoutput>User</cfoutput></center></h4>
+                <h4><center>User</center></h4>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Create Contact</button>
             </div>
             <div class="col  col-lg-8" id="tableDataView">              
@@ -348,10 +348,12 @@
                                 <div class="col-md-6">
                                     <label for="email">Email*</label>
                                     <input name="email" type="email" id="email1" class="form-control" onchange="validateEmail();" required/>
+                                     <p class="email_alert text-danger"></p>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="phone">Phone*</label>
-                                    <input name="phone" type="text" id="phone1" class="form-control" required/>
+                                    <input name="phone" type="text" id="phone1" class="form-control" onchange="validatePhone();" required/>
+                                       <p class="phone_alert text-danger"></p>
                                 </div>
                                 <input type="hidden" name="id"  id="id" value="0" /> 
                                   <input type="hidden" name="old_image"  id="old_image" value="0" /> 
@@ -359,7 +361,7 @@
                         </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary" id="s_btn">Save changes</button>
                     </div>
                     </form>  
                 </div>
@@ -369,48 +371,84 @@
     </div>
 </div>
 <script>
-  const editData = (id) => {
-          $.ajax({
-              url: "cfc/userdata.cfc",
-              type: "post", 
-              dataType: "json",
-              data: {
-                  method: "getContact",
-                  id
-              },
-              success: function (data){
-                  if(data && data.length){  
-                      $('#tit1').val(data[0].title);  
-                      $('#f1').val(data[0].fname);
-                      $('#lastName').val(data[0].lname);   
-                      $('#gend1').val(data[0].gender);
-                      $('#dob').val(data[0].dob); 
-                      $('#ad1').val(data[0].address);
-                      $('#st1').val(data[0].street);
-                      $('#email1').val(data[0].email); 
-                      $('#phone1').val(data[0].phone); 
-                      $('#id').val(data[0].id);  
-                      $('#old_image').val(data[0].image);                                                                            
-                      $('#exampleModalCenter').modal('show');
-                  }
-              }
-          });
+    const editData = (id) => {
+        $.ajax({
+            url: "cfc/userdata.cfc",
+            type: "post", 
+            dataType: "json",
+            data: {
+                method: "getContact",
+                id
+            },
+            success: function (data){
+                if(data && data.length){  
+                    $('#tit1').val(data[0].title);  
+                    $('#f1').val(data[0].fname);
+                    $('#lastName').val(data[0].lname);   
+                    $('#gend1').val(data[0].gender);
+                    $('#dob').val(data[0].dob); 
+                    $('#ad1').val(data[0].address);
+                    $('#st1').val(data[0].street);
+                    $('#email1').val(data[0].email); 
+                    $('#phone1').val(data[0].phone); 
+                    $('#id').val(data[0].id);  
+                    $('#old_image').val(data[0].image);                                                                            
+                    $('#exampleModalCenter').modal('show');
+                }
+            }
+        });
       }
-        function validateEmail() {      
-                    var email = document.getElementById("email1").value;
-                    $.ajax({
-                        type: "POST",
-                        url: "cfc/email.cfc",
-                        data: {
-                            datas: email
-                        }
-                        }).done(function(returnresult) {
-                        if (returnresult === "found ") {
-                            alert("already found this email id");
-                        } else {                            
-                            console.log("here reached");
-                        }
-                    })
-}
+    function validateEmail()
+    {   
+        var email_id= document.getElementById("email1").value;    
+        $.ajax({   
+            url: "./cfc/userdata.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"getEmailData",
+            email:email_id              
+            },
+            success: function(data)
+            {
+                console.log(data);            
+                if(data.RECORDCOUNT==1)
+                {
+                    $('.email_alert').text('Email Already Exists!!');
+                    $('#s_btn').prop('disabled', true);
+                }
+                else{
+                    $('.email_alert').text(" ");
+                    $('#s_btn').prop('disabled', false);
+                }                         
+            }         
+        });       
+   }
+    function validatePhone()
+    {   
+        var phone_id= document.getElementById("phone1").value;    
+        $.ajax({   
+            url: "./cfc/userdata.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"getPhoneData",
+            phone:phone_id              
+            },
+            success: function(data)
+            {
+                console.log(data);            
+                if(data.RECORDCOUNT != 0)
+                {
+                    $('.phone_alert').text('Phone Number Already Exists!!');
+                    $('#s_btn').prop('disabled', true);
+                }
+                else{
+                    $('.phone_alert').text(" ");
+                    $('#s_btn').prop('disabled', false);
+                }                         
+            }         
+        });       
+   }   
 </script>
 <cfinclude template="include/footer.cfm" runOnce="true">

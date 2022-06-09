@@ -3,11 +3,11 @@
         <cfargument name="username" type="string" required="true">
         <cfargument name="password" type="string" required="true">
         <cfif arguments.username eq "">
-            <cfset local.msg="2">
+            <cfset local.msg=hash('2','sha')>
             <cflocation url="../index.cfm?message=#local.msg#" addtoken ="no">
         </cfif>
         <cfif arguments.password eq "">
-            <cfset local.msg="3">
+            <cfset local.msg=hash('3','sha')>
             <cflocation url="../index.cfm?message=#local.msg#" addtoken ="no">
         </cfif>
         <cfquery datasource="newtech" result="outputdata" name="loginResult"> SELECT * FROM coldfusion.login 
@@ -23,7 +23,7 @@
                 <cflocation url="../dashboard.cfm" addtoken ="no">
             </cfif>
         <cfelse>
-            <cfset local.msg="4">
+            <cfset local.msg=hash('4','sha')>
             <cflocation url="../index.cfm?message=#local.msg#">
         </cfif>
     </cffunction>

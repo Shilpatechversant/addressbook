@@ -16,22 +16,22 @@
                                     <div class="text-center d-flex flex-column"> 
                                         <h1>Login</h1>
                                        <div class="row pt-5">
-                                            <cfif message EQ '1'>
+                                            <cfif message EQ hash('1','sha')>
                                                 <div class="alert alert-success alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Registration Successfull !!
                                                 </div>  
-                                            <cfelseif message EQ '2'>
+                                            <cfelseif message EQ hash('2','sha')>
                                                 <div class="alert alert-danger alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Please fill username!!
                                                 </div>  
-                                            <cfelseif message EQ '3'>
+                                            <cfelseif message EQ hash('3','sha')>
                                                 <div class="alert alert-danger alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Please fill Password!!
                                                 </div>   
-                                            <cfelseif message EQ '4'>
+                                            <cfelseif message EQ hash('4','sha')>
                                                 <div class="alert alert-danger alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Please fill Correct Username and password !!

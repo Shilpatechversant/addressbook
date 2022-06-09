@@ -17,31 +17,27 @@
                                             <h1>Sign Up</h1>
                                          </div>
                                          <div class="row pt-5">
-                                            <cfif message EQ '2'>
+                                            <cfif message EQ hash('2','sha')>
                                                 <div class="alert alert-danger alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Registration failed!!
                                                 </div>  
-                                            <cfelseif message EQ '3'>
+                                            <cfelseif message EQ hash('3','sha')>
                                                 <div class="alert alert-danger alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Please fill Fullname!!
                                                 </div>  
-                                            <cfelseif message EQ '4'>
+                                            <cfelseif message EQ hash('4','sha')>
                                                 <div class="alert alert-danger alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Please fill Email!!
                                                 </div>   
-                                            <cfelseif message EQ '5'>
+                                            <cfelseif message EQ hash('5','sha')>
                                                 <div class="alert alert-danger alert-dismissible">
                                                     <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                         Please fill username!!
                                                 </div>  
-                                            <cfelseif message EQ '5'>
-                                                <div class="alert alert-danger alert-dismissible">
-                                                    <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                       Password and confirm password should be same!!
-                                                </div>                           
+                                                                   
                                             </cfif> 
                                         </div>
 
