@@ -45,6 +45,6 @@
     <cffunction name="onSessionEnd" returntype="void">
         <cfargument name="sessionScope" type="any" required="true" hint="Session Scope"/>
         <cfdump var="#arguments.sessionScope.dateInitialized# : #now()#"/>
-    </cffunction> 
+    </cffunction>    
     
 </cfcomponent>

@@ -1,3 +1,6 @@
+<cfif Not structKeyExists(Session,'userId')>
+   <cflocation  url="index.cfm">
+</cfif>
 <cfparam  name="user_id" default="v">
 <cfset obj1=createObject("component","cfc.userdata")>
 <cfset data=obj1.getAllContact(user_id)>

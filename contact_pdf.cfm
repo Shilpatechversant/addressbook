@@ -1,3 +1,6 @@
+<cfif Not structKeyExists(Session,'userId')>
+   <cflocation  url="index.cfm">
+</cfif>
 <cfdocument format="PDF" filename="file.pdf" overwrite="Yes">
     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
     <cfinclude template="include/print_header.cfm" runOnce="true">
