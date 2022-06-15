@@ -72,4 +72,4 @@
             </div>
         </div>
     </div>    
-<cfinclude  template = "include/footer.cfm"  runOnce = "true">          
+<cfinclude  template = "include/footer.cfm">          

@@ -7,23 +7,23 @@
         <cfargument name="confirmPassWord" type="string" required="true"/>
 
         <cfif arguments.fullName eq "">
-            <cfset local.variable = "3">
-            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
+            <cfset local.msg=hash('3','sha')>
+            <cflocation url="../register.cfm?message=#local.msg#" addtoken ="no">
         </cfif>
 
         <cfif arguments.emailId eq "" >
-            <cfset local.variable = "4">
-            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
+            <cfset local.msg=hash('4','sha')>
+            <cflocation url="../register.cfm?message=#local.msg#" addtoken ="no">
         </cfif>
 
         <cfif arguments.userName eq "">
-            <cfset local.variable = "5">
-            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
+            <cfset local.msg=hash('5','sha')>
+            <cflocation url="../register.cfm?message=#local.msg#" addtoken ="no">
         </cfif>
 
         <cfif arguments.passWord neq arguments.confirmPassWord>
-            <cfset local.variable = "6">
-            <cflocation url="./register.cfm?message=#local.variable#" addtoken ="no">
+            <cfset local.msg=hash('6','sha')>
+            <cflocation url="./register.cfm?message=#local.msg#" addtoken ="no">
         </cfif>
 
         <cfquery name="emailcheck" datasource="newtech">
@@ -31,10 +31,19 @@
             from coldfusion.login
             where email = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.emailId#" >
         </cfquery>
+        <cfquery name="usernamecheck" datasource="newtech">
+            select username 
+            from coldfusion.login
+            where username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userName#" >
+        </cfquery>
+        <cfif usernamecheck.recordcount>
+            <cfset local.msg=hash('7','sha')>
+            <cflocation url="../register.cfm?message=#local.msg#" addtoken ="no">
+        </cfif>    
         
         <cfif emailcheck.recordcount >
-            <cfset local.variable = "already existing this email">
-            <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
+            <cfset local.msg=hash('8','sha')>
+            <cflocation url="../register.cfm?message=#local.msg#" addtoken ="no">
         <cfelse>           
             <cfquery datasource="newtech" result="result">
                 INSERT INTO coldfusion.login (fullname, email, username, password,status) VALUES (
@@ -46,11 +55,29 @@
             </cfquery>
             <cfif result.generatedkey>
                <cfset local.msg=hash('1','sha')>
-                <cflocation url="../index.cfm?message=#local.message#" addtoken ="no">
+                <cflocation url="../index.cfm?message=#local.msg#" addtoken ="no">
             <cfelse>
                 <cfset local.msg=hash('2','sha')>
-                <cflocation url="../register.cfm?message=#local.variable#" addtoken ="no">
+                <cflocation url="../register.cfm?message=#local.msg#" addtoken ="no">
             </cfif>
         </cfif>
     </cffunction>
+
+<cffunction name="getEmailData" access="remote" returnFormat = "json" >
+    <cfargument name="email" type="string" required="false" >
+    <cfquery name="contacts"  datasource="newtech" result="email_res">
+        SELECT * FROM coldfusion.login
+        WHERE email=<cfqueryparam value="#arguments.email#" cfsqltype="CF_SQL_VARCHAR">
+    </cfquery>  
+    <cfreturn email_res> 
+</cffunction>
+
+<cffunction name="getNameData" access="remote" returnFormat = "json" >
+    <cfargument name="uname" type="string" required="false" >
+    <cfquery name="contacts"  datasource="newtech" result="name_res">
+        SELECT * FROM coldfusion.login
+        WHERE username=<cfqueryparam value="#arguments.uname#" cfsqltype="CF_SQL_VARCHAR">
+    </cfquery>  
+    <cfreturn name_res> 
+</cffunction>
 </cfcomponent>

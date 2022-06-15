@@ -1,50 +1,55 @@
-<cfcomponent output="false">
-    <cfset this.name ="addressBook">
-    <cfset this.datasource = "newtech"/>
-    <cfset this.applicationTimeout = createTimespan(0,2,0,0)/>
-    <cfset this.sessionManagement  = "true">
-    <cfset this.sessionTimeout = createTimespan(0,0,30,0)/>
-    <cfset this.scriptProtect="all">
+component {
 
-    <cfset this.ormEnabled = true>
-    <cfset this.ormSettings = { 
+    this.name = "addressBook";
+    this.datasource = "newtech";
+    this.sessionManagement  = true;
+    this.sessionTimeout = CreateTimeSpan(0, 0, 30, 0);
+    this.scriptProtect="all";
+    this.ormEnabled = true;
+    this.ormSettings = { 
         logsql : true,
-        cflocation : ['cfc/contacts'],
-        <!--- dbcreate : "update",  --->
+        cflocation : ['cfc/contacts'],       
         dialect : "org.hibernate.dialect.MySQL5Dialect",
         datasource : "newtech",
         useDBForMapping : false
-    }>
-
-      <!---OnApplicationStart Method--->
-    <cffunction name="OnApplicationStart" returntype="boolean">
-        <cfset application.obj=createObject('component','cfc.userdata')>
-        <cfreturn true>
-    </cffunction>
-
-      <!---OnRequestStart Method--->
-    <cffunction name="OnRequestStart" returntype="boolean">
-        <cfset this.onApplicationStart()>
-        <cfif isDefined('url.id')>
-            <cfif 'url.id' eq 'logout'>
-                <cflocation  url="index.cfm" addtoken="no">
-            </cfif>
-        </cfif>
-        <cfreturn true>
-    </cffunction>
-
-    <cffunction name="onSessionStart" returnType="void" output="false">
-        <cfset session.started = now()>   
-        <cfif structKeyExists(Session,'userId')>
-            <cfset s="session">        
-        <cfelse>
-            <cfset this.onApplicationStart()>
-        </cfif>
-  </cffunction>
+    };
+    function OnApplicationStart(requestname)
+    {
+        application.obj=createObject('component','cfc.userdata');
+        this.return=true;
+    }
     
-    <cffunction name="onSessionEnd" returntype="void">
-        <cfargument name="sessionScope" type="any" required="true" hint="Session Scope"/>
-        <cfdump var="#arguments.sessionScope.dateInitialized# : #now()#"/>
-    </cffunction>    
-    
-</cfcomponent>
+    function onRequestStart(requestname){      
+        if(!structKeyExists(Session, "userId") ){
+            if(findNoCase("/addressbook/create_contact.cfm",requestname) > 0 ||
+            findNoCase("/addressbook/dashboard.cfm",requestname) > 0||
+            findNoCase("/addressbook/delete.cfm",requestname) > 0 ||
+            findNoCase("/addressbook/contact_excel.cfm",requestname) > 0 || 
+            findNoCase("/addressbook/print.cfm",requestname) > 0 || 
+            findNoCase("/addressbook/contact_pdf.cfm",requestname) > 0){
+                writeOutput('<center><h1>Login Required</h1>
+                <p>Please Login to yout account</p><br>
+                  <a href="index.cfm">Click Here</a></center>');
+                abort;
+            }
+        }
+    }
+
+    function onError(Exception,EventName){
+        writeOutput('<center><h1>An error occurred</h1>
+        <p>Please Contact the developer</p>
+        <p>Error details: #Exception.message#</p></center>');
+    } 
+
+    function onMissingTemplate(targetPage){
+        writeOutput('<center><h1>This Page is not avilable.</h1>
+        <p>Please go back:</p></center>');
+    }
+
+    function onSessionEnd(sessionScope, applicationScope){
+        writeOutput('<center>
+                     <h1>Your session expired. Please login again</h1>
+                     <a href="index.cfm">Click Here</a>
+                     </center>');
+    }
+}

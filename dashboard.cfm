@@ -1,8 +1,8 @@
-<cfparam  name="message" default="v"> 
-<cfparam  name="status" default="v">   
 <cfif Not structKeyExists(Session,'userId')>
    <cflocation  url="index.cfm">
 </cfif>
+<cfparam  name="message" default="v"> 
+<cfparam  name="status" default="v"> 
 <ORMRelaod()>
 <cfset test = entityLoad("contacts",{user_id="#Session.userId#"})>           
 <cfset jsonise = serializeJSON( test)>
@@ -43,7 +43,7 @@
         <cfif message EQ hash('2','sha')>
             <div class="alert alert-success alert-dismissible">
                 <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                   Please Fill all the Fields!!
+                   Please Fill all the Required Fields!!
             </div> 
         <cfelseif message EQ hash('3','sha')>
             <div class="alert alert-success alert-dismissible">
@@ -370,85 +370,4 @@
        <!-- Modal -->    
     </div>
 </div>
-<script>
-    const editData = (id) => {
-        $.ajax({
-            url: "cfc/userdata.cfc",
-            type: "post", 
-            dataType: "json",
-            data: {
-                method: "getContact",
-                id
-            },
-            success: function (data){
-                if(data && data.length){  
-                    $('#tit1').val(data[0].title);  
-                    $('#f1').val(data[0].fname);
-                    $('#lastName').val(data[0].lname);   
-                    $('#gend1').val(data[0].gender);
-                    $('#dob').val(data[0].dob); 
-                    $('#ad1').val(data[0].address);
-                    $('#st1').val(data[0].street);
-                    $('#email1').val(data[0].email); 
-                    $('#phone1').val(data[0].phone); 
-                    $('#id').val(data[0].id);  
-                    $('#old_image').val(data[0].image);                                                                            
-                    $('#exampleModalCenter').modal('show');
-                }
-            }
-        });
-      }
-    function validateEmail()
-    {   
-        var email_id= document.getElementById("email1").value;    
-        $.ajax({   
-            url: "./cfc/userdata.cfc",
-            type: 'get',
-            dataType:"json",
-            data:{
-            method:"getEmailData",
-            email:email_id              
-            },
-            success: function(data)
-            {
-                console.log(data);            
-                if(data.RECORDCOUNT==1)
-                {
-                    $('.email_alert').text('Email Already Exists!!');
-                    $('#s_btn').prop('disabled', true);
-                }
-                else{
-                    $('.email_alert').text(" ");
-                    $('#s_btn').prop('disabled', false);
-                }                         
-            }         
-        });       
-   }
-    function validatePhone()
-    {   
-        var phone_id= document.getElementById("phone1").value;    
-        $.ajax({   
-            url: "./cfc/userdata.cfc",
-            type: 'get',
-            dataType:"json",
-            data:{
-            method:"getPhoneData",
-            phone:phone_id              
-            },
-            success: function(data)
-            {
-                console.log(data);            
-                if(data.RECORDCOUNT != 0)
-                {
-                    $('.phone_alert').text('Phone Number Already Exists!!');
-                    $('#s_btn').prop('disabled', true);
-                }
-                else{
-                    $('.phone_alert').text(" ");
-                    $('#s_btn').prop('disabled', false);
-                }                         
-            }         
-        });       
-   }   
-</script>
 <cfinclude template="include/footer.cfm" runOnce="true">

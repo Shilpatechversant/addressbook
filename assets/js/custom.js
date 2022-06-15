@@ -128,4 +128,5 @@ function validateRegisterForm() {
       window.print();   
      // document.body.innerHTML = originalContents;
   }
+ 
   }
